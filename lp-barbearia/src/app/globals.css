@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme {
+  /* Night — quase preto, frio (contraponto ao espresso quente da LP de reformas) */
+  --color-night-950: #0A0B0D;
+  --color-night-900: #121419;
+  --color-night-850: #171A20;
+  --color-night-800: #1E222A;
+  --color-night-700: #2B3039;
+  --color-night-500: #5C6472;
+  --color-night-400: #7E8796;
+  --color-night-300: #A9B0BC;
+
+  /* Brass — latão, a cor do espelho da barbearia */
+  --color-brass-200: #F0DFB4;
+  --color-brass-300: #E4CB8C;
+  --color-brass-400: #D2B05C;
+  --color-brass-500: #B9933A;
+  --color-brass-600: #96742A;
+
+  --color-bone-50: #F6F4F0;
+  --color-bone-100: #EAE6DE;
+
+  --font-display: var(--font-oswald), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-drop: 0 2px 6px rgb(0 0 0 / 0.30), 0 24px 48px -18px rgb(0 0 0 / 0.55);
+
+  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background: var(--color-night-950);
+  color: var(--color-bone-50);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Display condensada sempre em caixa alta, com respiro entre letras */
+.display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 0.95;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* Filete de latão usado como divisor entre seções */
+.rule-brass {
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-brass-500) 20%,
+    var(--color-brass-500) 80%,
+    transparent
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

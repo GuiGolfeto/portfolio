@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme {
+  /* Ink — deep navy, mais quente e caro que preto puro */
+  --color-ink-950: #071722;
+  --color-ink-900: #0C2433;
+  --color-ink-800: #14384B;
+  --color-ink-600: #38617B;
+  --color-ink-400: #6D8CA3;
+  --color-ink-300: #9DB4C6;
+
+  /* Brand — teal/aqua "água limpa" */
+  --color-brand-50: #EAFBF7;
+  --color-brand-100: #CCF5EB;
+  --color-brand-200: #9AEBDA;
+  --color-brand-300: #5DD9C2;
+  --color-brand-400: #2CC0A8;
+  --color-brand-500: #12A594;
+  --color-brand-600: #0A8577;
+  --color-brand-700: #0A6A60;
+  --color-brand-900: #06413C;
+
+  /* Accent — âmbar quente para o CTA saltar do teal */
+  --color-accent-300: #FFD481;
+  --color-accent-400: #FFC24D;
+  --color-accent-500: #FFAE1A;
+  --color-accent-600: #E08E00;
+
+  --color-sand-50: #FBF9F5;
+  --color-mist-50: #F4FAF9;
+
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-4xl: 2rem;
+  --radius-5xl: 2.75rem;
+
+  --shadow-soft: 0 1px 2px rgb(7 23 34 / 0.04), 0 8px 24px -8px rgb(7 23 34 / 0.10);
+  --shadow-lift: 0 2px 4px rgb(7 23 34 / 0.04), 0 18px 45px -12px rgb(7 23 34 / 0.18);
+  --shadow-glow: 0 18px 40px -12px rgb(18 165 148 / 0.45);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background: var(--color-sand-50);
+  color: var(--color-ink-900);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Reveal on scroll — a classe .is-in é adicionada pelo Reveal.tsx */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Filtro "sujeira" do slider antes/depois — usado só quando não há
+   foto real do "antes". Ver components/BeforeAfter.tsx */
+.grime {
+  filter: sepia(0.55) saturate(0.55) brightness(0.56) contrast(0.95) blur(0.6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

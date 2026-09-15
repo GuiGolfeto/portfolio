@@ -1,0 +1,18 @@
+# dependências
+node_modules/
+
+# build
+.next/
+out/
+*.tsbuildinfo
+
+# ambiente
+.env*
+!.env.example
+
+# macOS
+.DS_Store
+
+# duplicatas que a sincronização do iCloud cria (quebram o tsc)
+* 2.*
+* 3.*
