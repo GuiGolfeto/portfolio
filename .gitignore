@@ -1,18 +1,33 @@
-# dependências
+# dependências (raiz e as LPs vizinhas)
 node_modules/
+.pnp
+.pnp.*
 
 # build
 .next/
 out/
+/build
 *.tsbuildinfo
+next-env.d.ts
 
 # ambiente
 .env*
-!.env.example
+.vercel
 
 # macOS
 .DS_Store
+*.pem
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
 # duplicatas que a sincronização do iCloud cria (quebram o tsc)
 * 2.*
 * 3.*
+
+# As demos são build das LPs vizinhas, mas PRECISAM ir para o Git:
+# a Vercel instala só as dependências da raiz e não conseguiria construí-las.
+!/public/demos

@@ -1,48 +1,88 @@
-# Sites para negócios locais — portfólio e demos
+# Guilherme Golfeto — portfólio
 
-Monorepo simples com quatro projetos Next.js:
+Site pessoal com **três LPs de demonstração embutidas no mesmo deploy**.
+
+- `/` → o portfólio
+- `/demos/limpeza`, `/demos/reformas`, `/demos/barbearia` → os sites completos,
+  funcionando
+
+O app do portfólio vive na **raiz do repositório**, de propósito: assim a Vercel
+o encontra sem nenhuma configuração. As três LPs ficam em pastas irmãs.
 
 | Pasta | O que é |
 | --- | --- |
-| `portfolio/` | **O site que vai para o ar.** Portfólio pessoal, com as três demos embutidas. |
+| `src/`, `public/` | O portfólio (o app que vai para o ar) |
 | `lp-cleaning/` | Demo: empresa de limpeza (SparkleHome) |
 | `lp-handyman/` | Demo: reformas e construção (Ramos Construction) |
 | `lp-barbearia/` | Demo: barbearia (Studio Nove) |
 
-As três demos são construídas como HTML estático e copiadas para
-`portfolio/public/demos/`, então **um único deploy serve tudo**:
-
-- `/` → portfólio
-- `/demos/limpeza`, `/demos/reformas`, `/demos/barbearia` → os sites completos
-
 ## Deploy na Vercel
 
-1. Importe este repositório na Vercel.
-2. Em **Root Directory**, escolha **`portfolio`**.
-3. O resto é o padrão do Next.js. Não há variável de ambiente.
+Importe o repositório e faça deploy. **Sem ajuste de Root Directory, sem
+variável de ambiente, sem comando customizado** — o padrão do Next.js funciona.
 
-`portfolio/public/demos/` está versionado de propósito: a Vercel instala apenas
-as dependências do `portfolio`, então não conseguiria construir as LPs vizinhas
-na hora do deploy.
+`public/demos/` está versionado de propósito: a Vercel instala apenas as
+dependências da raiz, então não conseguiria construir as LPs vizinhas durante o
+deploy. Elas vão prontas no commit.
 
 ## Rodar local
 
 ```bash
-cd portfolio && npm install && npm run dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Para mexer numa demo, entre na pasta dela (`cd lp-cleaning && npm install &&
-npm run dev`). Depois de alterar, regenere o que vai para o portfólio:
+As LPs têm dependências próprias. Para mexer numa delas:
 
 ```bash
-cd portfolio && npm run demos
+cd lp-cleaning && npm install && npm run dev
+```
+
+Depois de alterar qualquer LP, regenere o que o portfólio serve:
+
+```bash
+npm run demos                              # da raiz
 git add public/demos && git commit -m "atualiza demos"
 ```
 
-Cada projeto tem o próprio README com os detalhes.
+## Como as demos ficam embutidas
+
+`scripts/build-demos.mjs` roda `next build` em cada LP com
+`DEMO_BASE_PATH=/demos/<slug>`, o que faz cada uma sair como HTML estático já
+prefixado, e copia o resultado para `public/demos/<slug>/`.
+
+Duas peças em cada LP sustentam isso:
+
+- `next.config.ts` — sem a variável, a LP roda normal com o otimizador de
+  imagens; com ela, vira `output: "export"` com `basePath`.
+- `image-loader.ts` — o Next aplica o `basePath` aos chunks de `_next`, mas
+  **não** ao `src` de imagens vindas de `/public`. Sem esse loader as fotos
+  dariam 404 dentro de `/demos/<slug>/`.
+
+No portfólio, o `rewrites` do `next.config.ts` mapeia `/demos/:slug` para o
+`index.html` de cada pasta, porque o Next não resolve índice de diretório
+sozinho em arquivos estáticos.
+
+O `tsconfig.json` e o `eslint.config.mjs` da raiz excluem as pastas `lp-*`:
+cada LP tem a própria configuração, e sem isso o type-check da raiz tentaria
+compilar as três.
+
+## Seus dados
+
+`src/lib/content.ts` concentra e-mail, Instagram, sua foto, todo o texto da
+página e a lista de demos.
+
+## Responsividade
+
+```bash
+npm run dev
+node scripts/check-responsive.mjs
+```
+
+Verificado em 320, 360, 390, 430, 768, 1024 e 1440px.
 
 ## Aviso sobre as demos
 
-São sites de demonstração. Os negócios, endereços, telefones, avaliações e
-números de licença são **fictícios**. Os telefones usam a faixa 555-01xx,
-reservada para uso ficcional.
+São sites de demonstração. Negócios, endereços, telefones, avaliações, e-mails
+e números de licença são **fictícios** — os telefones usam a faixa 555-01xx e os
+e-mails o TLD `.example`, ambos reservados justamente para isso.
