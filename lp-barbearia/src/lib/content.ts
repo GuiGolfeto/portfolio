@@ -9,9 +9,9 @@ export const business = {
   phone: "+15085550168",
   phonePretty: "(508) 555-0168",
   instagram: "studionove.barbearia",
-  address: "412 Concord St, Framingham, MA 01702",
-  addressShort: "412 Concord St · Framingham",
-  mapsUrl: "https://maps.google.com/?q=412+Concord+St+Framingham+MA",
+  address: "123 Example St, Framingham, MA 01702",
+  addressShort: "123 Example St · Framingham",
+  mapsUrl: "https://maps.google.com/?q=Framingham+MA",
 } as const;
 
 /** Serviços: preço e duração são iguais nos dois idiomas, só o texto muda. */
@@ -51,7 +51,7 @@ export const copy = {
     ctaPrimary: "Book a chair",
     ctaSecondary: "See services",
   },
-  strip: { hours: "Tue to Sat · 9am to 7pm", address: "412 Concord St, Framingham", phone: "Call to book" },
+  strip: { hours: "Tue to Sat · 9am to 7pm", address: "123 Example St, Framingham", phone: "Call to book" },
   services: {
     eyebrow: "Price list",
     title: "Services and prices",

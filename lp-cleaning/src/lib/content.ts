@@ -10,7 +10,7 @@ export const business = {
   /* Formato E.164 — usado nos links tel: e sms: */
   phone: "+15085550142",
   phonePretty: "(508) 555-0142",
-  email: "hello@sparklehome.co",
+  email: "hello@sparklehome.example",
   instagram: "sparklehome.cleaning",
   cities: [
     "Framingham",

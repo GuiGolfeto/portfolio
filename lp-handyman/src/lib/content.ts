@@ -8,8 +8,8 @@ export const business = {
   nameFull: "Ramos Construction & Remodeling",
   phone: "+15085550117",
   phonePretty: "(508) 555-0117",
-  email: "info@ramosconstruction.com",
-  license: "MA HIC #187452",
+  email: "info@ramos.example",
+  license: "MA HIC #000000",
   since: 2010,
   cities: [
     "Framingham", "Natick", "Marlborough", "Worcester",
